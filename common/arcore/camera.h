@@ -42,15 +42,11 @@ namespace oc {
 
         void DrawARCore(const ArSession *session, const ArFrame *frame, Effect effect, int w = 0, int h = 0);
 
-        void DrawAREngine(const HwArSession *session, const HwArFrame *frame, Effect effect, int w = 0, int h = 0);
-
         GLSL* GetShader() { return shader_program_; }
 
         GLuint GetTextureName() { return texture_id_; }
 
         void InitARCore(const ArSession *session, const ArFrame *frame);
-
-        void InitAREngine(const HwArSession *session, const HwArFrame *frame);
 
         void SetNVScheme(NightVisionScheme s) { scheme = s; }
 

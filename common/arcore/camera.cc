@@ -114,30 +114,11 @@ namespace oc {
         Draw(effect, w, h);
     }
 
-    void ARCoreCamera::DrawAREngine(const HwArSession *session, const HwArFrame *frame, Effect effect, int w, int h) {
-        InitAREngine(session, frame);
-        Draw(effect, w, h);
-    }
-
     void ARCoreCamera::InitARCore(const ArSession *session, const ArFrame *frame) {
         int32_t geometry_changed = 0;
         ArFrame_getDisplayGeometryChanged(session, frame, &geometry_changed);
         if (geometry_changed != 0 || !uvs_initialized_) {
             ArFrame_transformDisplayUvCoords(session, frame, 8, kUvs, transformed_uvs_);
-            minX = 9999;
-            minY = 9999;
-            maxX =-9999;
-            maxY =-9999;
-            aabb_initialized_ = false;
-            uvs_initialized_ = true;
-        }
-    }
-
-    void ARCoreCamera::InitAREngine(const HwArSession *session, const HwArFrame *frame) {
-        int32_t geometry_changed = 0;
-        HwArFrame_getDisplayGeometryChanged(session, frame, &geometry_changed);
-        if (geometry_changed != 0 || !uvs_initialized_) {
-            HwArFrame_transformDisplayUvCoords(session, frame, 8, kUvs, transformed_uvs_);
             minX = 9999;
             minY = 9999;
             maxX =-9999;

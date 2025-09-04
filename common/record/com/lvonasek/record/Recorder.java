@@ -18,6 +18,7 @@ import android.media.MediaMuxer;
 import android.media.MediaRecorder;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -75,33 +76,6 @@ public class Recorder {
     private static File mCustomRoot = null;
     private static int mVideoDownscale = 640;
     private static int mVideoFPS = 15;
-
-    public static void capturePhoto(GL10 gl, GLESSurfaceView view) {
-        int w = view.getWidth();
-        int h = view.getHeight();
-        Bitmap bitmap = createBitmapFromGLSurface(0, 0, w, h, gl, 1);
-        if (bitmap != null) {
-            Context context = view.getContext();
-            playShooterSound(context, MediaActionSound.SHUTTER_CLICK);
-            try {
-                FileDescriptor file = context.getContentResolver().openFileDescriptor(getFile(context, false), "rw").getFileDescriptor();
-                FileOutputStream out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                out.flush();
-                out.close();
-
-                MediaScannerConnection.scanFile(context,
-                        new String[] { file.toString() }, null,
-                        (path, uri) -> {
-                            Log.i("ExternalStorage", "Scanned " + path + ":");
-                            Log.i("ExternalStorage", "-> uri=" + uri);
-                        });
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public static void captureVideoFrame(GL10 gl, GLESSurfaceView view, boolean addTimestamp, int frameSkip, boolean multithread) {
         if (!isVideoRecording()) {
@@ -252,15 +226,6 @@ public class Recorder {
     public static File getVideoFile() {
         return mVideoFile;
     }
-
-    public static int getVideoFPS() {
-        return mVideoFPS;
-    }
-
-    public static void setCustomRoot(File file) {
-        mCustomRoot = file;
-    }
-
     public static void setVideoDownscale(int downscale) {
         mVideoDownscale = downscale;
     }
@@ -342,7 +307,10 @@ public class Recorder {
                 audioExtractor.setDataSource(mAudioFile.getAbsolutePath());
             }
 
-            MediaMuxer muxer = new MediaMuxer(file, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            MediaMuxer muxer = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                muxer = new MediaMuxer(file, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+            }
 
             videoExtractor.selectTrack(0);
             MediaFormat videoFormat = videoExtractor.getTrackFormat(0);
@@ -480,4 +448,31 @@ public class Recorder {
         }
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
+
+//    public static void capturePhoto(GL10 gl, GLESSurfaceView view) {
+//        int w = view.getWidth();
+//        int h = view.getHeight();
+//        Bitmap bitmap = createBitmapFromGLSurface(0, 0, w, h, gl, 1);
+//        if (bitmap != null) {
+//            Context context = view.getContext();
+//            playShooterSound(context, MediaActionSound.SHUTTER_CLICK);
+//            try {
+//                FileDescriptor file = context.getContentResolver().openFileDescriptor(getFile(context, false), "rw").getFileDescriptor();
+//                FileOutputStream out = new FileOutputStream(file);
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+//                out.flush();
+//                out.close();
+//
+//                MediaScannerConnection.scanFile(context,
+//                        new String[] { file.toString() }, null,
+//                        (path, uri) -> {
+//                            Log.i("ExternalStorage", "Scanned " + path + ":");
+//                            Log.i("ExternalStorage", "-> uri=" + uri);
+//                        });
+//            }
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

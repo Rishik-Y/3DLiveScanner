@@ -295,8 +295,10 @@ public class FileManager extends AbstractActivity implements View.OnClickListene
 
     try {
       boolean arcore = Compatibility.isPlayStoreSupported(this);
-      boolean arengine = Compatibility.shouldUseHuawei(this);
-      if ((!arengine || arcore) && Compatibility.isARSupported(this))
+//      boolean arengine = Compatibility.shouldUseHuawei(this);
+      if ((
+//              !arengine ||
+                      arcore) && Compatibility.isARSupported(this))
         if (ArCoreApk.getInstance().requestInstall(this, true) != ArCoreApk.InstallStatus.INSTALLED)
           return;
     } catch (Exception e) {

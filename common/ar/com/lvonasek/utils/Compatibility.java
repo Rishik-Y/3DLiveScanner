@@ -6,15 +6,14 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
-import android.os.Build;
+//import android.os.Build;
 
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.CameraConfig;
 import com.google.ar.core.Config;
 import com.google.ar.core.Session;
-import com.huawei.hiar.ARConfigBase;
-import com.huawei.hiar.ARSession;
-import com.huawei.hiar.ARWorldTrackingConfig;
+//import com.huawei.hiar.ARSession;
+//import com.huawei.hiar.ARWorldTrackingConfig;
 
 public class Compatibility {
 
@@ -54,46 +53,16 @@ public class Compatibility {
         if (availability == ArCoreApk.Availability.SUPPORTED_NOT_INSTALLED) {
             return true;
         }
-        try {
-            ARSession session = new ARSession(context);
-            ARWorldTrackingConfig config = new ARWorldTrackingConfig(session);
-            session.configure(config);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static boolean isARCoreSupportedAndUpToDate(Activity activity) {
-        // Make sure ARCore is installed and supported on this device.
-        ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(activity);
-        switch (availability) {
-            case SUPPORTED_INSTALLED:
-                break;
-            case SUPPORTED_APK_TOO_OLD:
-            case SUPPORTED_NOT_INSTALLED:
-                try {
-                    // Request ARCore installation or update if needed.
-                    ArCoreApk.InstallStatus installStatus =
-                            ArCoreApk.getInstance().requestInstall(activity, /*userRequestedInstall=*/ true);
-                    switch (installStatus) {
-                        case INSTALL_REQUESTED:
-                            return false;
-                        case INSTALLED:
-                            break;
-                    }
-                } catch (Exception e) {
-                    return false;
-                }
-                break;
-            case UNKNOWN_ERROR:
-            case UNKNOWN_CHECKING:
-            case UNKNOWN_TIMED_OUT:
-            case UNSUPPORTED_DEVICE_NOT_CAPABLE:
-                return false;
-        }
-        return true;
+//        try {
+//            ARSession session = new ARSession(context);
+//            ARWorldTrackingConfig config = new ARWorldTrackingConfig(session);
+//            session.configure(config);
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+        return false;
     }
 
     public static boolean isDaydreamSupported(Context context)
@@ -138,32 +107,6 @@ public class Compatibility {
         return false;
     }
 
-    public static boolean isHuaweiToFSupported(Activity activity) {
-        //blacklist Huawei Mate 20, Huawei Mate 20 RS, Huawei Mate 20 X
-        if (Build.DEVICE.startsWith("HWHMA")) return false;
-        if (Build.DEVICE.startsWith("HWLYA")) return false;
-        if (Build.DEVICE.startsWith("HWEVR")) return false;
-        //blacklist Huawei P20 Pro
-        if (Build.DEVICE.startsWith("HW-01K")) return false;
-        if (Build.DEVICE.startsWith("HWCLT")) return false;
-        //blacklist Huawei P30
-        if (Build.DEVICE.startsWith("HWELE")) return false;
-
-        //blacklist devices without ToF sensor
-        if (!hasToFSensor(activity)) return false;
-
-        try {
-            ARSession session = new ARSession(activity);
-            ARWorldTrackingConfig config = new ARWorldTrackingConfig(session);
-            config.setEnableItem(ARConfigBase.ENABLE_DEPTH | ARConfigBase.ENABLE_MESH);
-            session.configure(config);
-            return session.isSupported(config);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public static boolean isPlayStoreSupported(Context context)
     {
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -174,7 +117,60 @@ public class Compatibility {
         return false;
     }
 
-    public static boolean shouldUseHuawei(Activity activity) {
-        return isHuaweiToFSupported(activity) || !isPlayStoreSupported(activity);
-    }
+//    public static boolean isARCoreSupportedAndUpToDate(Activity activity) {
+//        // Make sure ARCore is installed and supported on this device.
+//        ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(activity);
+//        switch (availability) {
+//            case SUPPORTED_INSTALLED:
+//                break;
+//            case SUPPORTED_APK_TOO_OLD:
+//            case SUPPORTED_NOT_INSTALLED:
+//                try {
+//                    // Request ARCore installation or update if needed.
+//                    ArCoreApk.InstallStatus installStatus =
+//                            ArCoreApk.getInstance().requestInstall(activity, /*userRequestedInstall=*/ true);
+//                    switch (installStatus) {
+//                        case INSTALL_REQUESTED:
+//                            return false;
+//                        case INSTALLED:
+//                            break;
+//                    }
+//                } catch (Exception e) {
+//                    return false;
+//                }
+//                break;
+//            case UNKNOWN_ERROR:
+//            case UNKNOWN_CHECKING:
+//            case UNKNOWN_TIMED_OUT:
+//            case UNSUPPORTED_DEVICE_NOT_CAPABLE:
+//                return false;
+//        }
+//        return true;
+//    }
+
+//    public static boolean isHuaweiToFSupported(Activity activity) {
+//        //blacklist Huawei Mate 20, Huawei Mate 20 RS, Huawei Mate 20 X
+//        if (Build.DEVICE.startsWith("HWHMA")) return false;
+//        if (Build.DEVICE.startsWith("HWLYA")) return false;
+//        if (Build.DEVICE.startsWith("HWEVR")) return false;
+//        //blacklist Huawei P20 Pro
+//        if (Build.DEVICE.startsWith("HW-01K")) return false;
+//        if (Build.DEVICE.startsWith("HWCLT")) return false;
+//        //blacklist Huawei P30
+//        if (Build.DEVICE.startsWith("HWELE")) return false;
+//
+//        //blacklist devices without ToF sensor
+//        if (!hasToFSensor(activity)) return false;
+//
+//        try {
+//            ARSession session = new ARSession(activity);
+//            ARWorldTrackingConfig config = new ARWorldTrackingConfig(session);
+//            config.setEnableItem(ARConfigBase.ENABLE_DEPTH | ARConfigBase.ENABLE_MESH);
+//            session.configure(config);
+//            return session.isSupported(config);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 }

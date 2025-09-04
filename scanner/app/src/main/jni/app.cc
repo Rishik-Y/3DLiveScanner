@@ -165,7 +165,6 @@ namespace oc {
                                 reconstruction.event_mutex_.unlock();
                             }
 
-                            reconstruction.frame_sparse = ar->GetMode() == ARCoreService::HUAWEI_SFM;
                             if (reconstruction.t3dr_is_running_) {
                                 reconstruction.frame_points = ar->GetPointCloud(maxDiff);
 

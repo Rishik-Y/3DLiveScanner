@@ -9,4 +9,3 @@
 # Closed source libraries
 * Google ARCore (Apache License v2) - https://github.com/google-ar/arcore-android-sdk
 * Google Tango3DR (Apache License v2) - https://github.com/googlearchive/tango-examples-c
-* Huawei AREngine (Apache License v2) - https://developer.huawei.com/consumer/en/ar

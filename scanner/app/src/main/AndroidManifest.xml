@@ -14,10 +14,6 @@
     <uses-feature android:name="android.hardware.camera.ar" android:required="true" />
     <uses-feature android:name="com.google.ar.core.depth" android:required="false" />
 
-    <queries>
-        <package android:name="com.huawei.arengine.service" />
-    </queries>
-
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -126,7 +122,6 @@
         </provider>
 
         <meta-data android:name="com.google.ar.core" android:value="optional" />
-        <meta-data android:name="com.huawei.ar.engine" android:value="optional" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 

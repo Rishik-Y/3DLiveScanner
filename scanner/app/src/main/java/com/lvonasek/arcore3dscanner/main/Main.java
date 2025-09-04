@@ -105,23 +105,24 @@ public class Main extends AbstractActivity implements View.OnClickListener,
   float mCameraRecordYaw = 0;
 
   int getARMode() {
-    int mode = getBackend(this) * 3; //0 = GOOGLE_SFM, 3 = HUAWEI_SFM
+    int mode = 0; //0 = GOOGLE_SFM, 3 = HUAWEI_SFM
     if (isFaceModeOn(this)) {
       mCameraControl.updateView(CameraControl.ViewMode.FACE);
-      if (Compatibility.shouldUseHuawei(this))
-        mode = 5; //HUAWEI_FACE
-      else
+//      if (Compatibility.shouldUseHuawei(this))
+//        mode = 5; //HUAWEI_FACE
+//      else
         mode = 2; //GOOGLE_FACE
     }
     else if (isTofOn(this))
       mode++; //1 = GOOGLE_TOF, 4 = HUAWEI_TOF
 
-    //HUAWEI_SFM
-    if (mode == 3) {
-      if (Compatibility.isARCoreSupportedAndUpToDate(this)) {
-        mode = 0; //GOOGLE_SFM
-      }
-    }
+//    //HUAWEI_SFM
+//    if (mode == 3) {
+//      if (Compatibility.isARCoreSupportedAndUpToDate(this)) {
+//        mode = 0; //GOOGLE_SFM
+//      }
+//    }
+
     //GOOGLE_SFM
     if (mode == 0) {
       if (!Compatibility.isGoogleDepthSupported(this)) {
@@ -143,8 +144,6 @@ public class Main extends AbstractActivity implements View.OnClickListener,
     if (mRes > 0.0099f) {
       mCameraControl.setOffset(mRes * 100);
     }
-    //change resolution for HUAWEI_SFM
-    if (mode == 3) { res *= 2.0f; }
 
     SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
     mAnchors      = pref.getBoolean(getString(R.string.pref_anchor), false);
@@ -154,8 +153,8 @@ public class Main extends AbstractActivity implements View.OnClickListener,
     boolean disto = false;
     boolean poses = pref.getBoolean(getString(R.string.pref_slow), false);
     boolean offst = pref.getBoolean(getString(R.string.pref_offset), true) && !poses;
-    boolean holes = mode == 3; // HUAWEI_SFM
-    boolean flash = pref.getBoolean(getString(R.string.pref_flash), false) && !isFaceModeOn(this) && !texturize;
+      boolean holes = false; // Remove Huawei-specific logic
+      boolean flash = pref.getBoolean(getString(R.string.pref_flash), false) && !isFaceModeOn(this) && !texturize;
     boolean poiss = pref.getBoolean(getString(R.string.pref_poisson), false);
     dmax = Integer.parseInt(pref.getString(getString(R.string.pref_limit), "4"));
 

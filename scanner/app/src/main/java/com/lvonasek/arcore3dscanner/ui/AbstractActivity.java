@@ -117,10 +117,10 @@ public abstract class AbstractActivity extends Activity {
 
   public abstract int getStatusBarColor();
 
-  public static int getBackend(Activity context)
-  {
-    return Compatibility.shouldUseHuawei(context) ? 1 : 0;
-  }
+//  public static int getBackend(Activity context)
+//  {
+//    return Compatibility.shouldUseHuawei(context) ? 1 : 0;
+//  }
 
   public static float getResolution(Context context)
   {
@@ -162,14 +162,14 @@ public abstract class AbstractActivity extends Activity {
 
   public static boolean isTofSupported(Activity activity)
   {
-    switch (getBackend(activity)) {
-      case 0:
+//    switch (getBackend(activity)) {
+//      case 0:
         return Compatibility.isGoogleToFSupported(activity);
-      case 1:
-        return Compatibility.isHuaweiToFSupported(activity);
-      default:
-        return false;
-    }
+//      case 1:
+//        return Compatibility.isHuaweiToFSupported(activity);
+//      default:
+//        return false;
+//    }
   }
 
   public static ArrayList<String> listFiles(File file) {

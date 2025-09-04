@@ -5,7 +5,6 @@
 #include <queue>
 #include <jni.h>
 #include <arcore/arcore.h>
-#include <arcore/arengine.h>
 
 namespace oc {
 
@@ -14,10 +13,7 @@ namespace oc {
         enum Mode {
             GOOGLE_SFM,
             GOOGLE_TOF,
-            GOOGLE_FACE,
-            HUAWEI_SFM,
-            HUAWEI_TOF,
-            HUAWEI_FACE
+            GOOGLE_FACE
         };
 
         ARCoreService(void *env, void *context, Mode mode = GOOGLE_SFM, bool flashlight = false);
@@ -80,7 +76,6 @@ namespace oc {
 
     private:
         ARCore* google;
-        AREngine* huawei;
 
         GLRenderer *renderer = nullptr;
 

@@ -5,7 +5,7 @@ PROJECT_ROOT:= $(call my-dir)/../../../../..
 include $(CLEAR_VARS)
 LOCAL_MODULE           := lib3dscanner
 LOCAL_CFLAGS           := -DCERES_FOUND=1
-LOCAL_SHARED_LIBRARIES := arcore arengine opencv_imgcodecs opencv_features2d opencv_core tango_3d_reconstruction
+LOCAL_SHARED_LIBRARIES := arcore opencv_imgcodecs opencv_features2d opencv_core tango_3d_reconstruction
 LOCAL_STATIC_LIBRARIES := jpeg-turbo png poisson
 
 LOCAL_C_INCLUDES := \
@@ -17,7 +17,6 @@ LOCAL_C_INCLUDES := \
                     $(PROJECT_ROOT)/common/
 
 LOCAL_SRC_FILES := ../../../../../common/arcore/arcore.cc \
-                   ../../../../../common/arcore/arengine.cc \
                    ../../../../../common/arcore/camera.cc \
                    ../../../../../common/arcore/service.cc \
                    ../../../../../common/data/dataset.cc \
@@ -55,7 +54,6 @@ include $(BUILD_SHARED_LIBRARY)
 $(call import-add-path, $(PROJECT_ROOT))
 $(call import-add-path, $(PROJECT_ROOT)/third_party)
 $(call import-module,arcore)
-$(call import-module,arengine)
 $(call import-module,libjpeg-turbo)
 $(call import-module,libpng)
 $(call import-module,opencv)
