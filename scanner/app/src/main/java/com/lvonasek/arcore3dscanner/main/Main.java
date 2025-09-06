@@ -139,7 +139,7 @@ public class Main extends AbstractActivity implements View.OnClickListener,
     }
 
     boolean texturize = (mToPostprocess != null) || (Math.abs(Service.getRunning(this)) == Service.SERVICE_SAVE);
-    double res = mRes, dmin = 0.01f, dmax = 7;
+    double res = mRes, dmin = 0.01f, dmax;
     mCameraControl.setOffset(0);
     if (mRes > 0.0099f) {
       mCameraControl.setOffset(mRes * 100);
@@ -697,18 +697,11 @@ public class Main extends AbstractActivity implements View.OnClickListener,
       mThumbnailButton.setOnClickListener(view -> {
         mDistance.reset();
         CharSequence[] items;
-        if (isProVersion(this)) {
           items = new CharSequence[]{
                   getString(R.string.sketchfab_dialog_title),
                   getString(R.string.screenshot),
                   getString(R.string.videoshot)
-          };
-        } else {
-          items = new CharSequence[]{
-                  getString(R.string.sketchfab_dialog_title),
-                  getString(R.string.screenshot)
-          };
-        }
+        };
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(R.string.share_via);

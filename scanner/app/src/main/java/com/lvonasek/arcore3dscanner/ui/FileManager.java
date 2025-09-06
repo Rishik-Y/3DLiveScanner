@@ -61,7 +61,6 @@ public class FileManager extends AbstractActivity implements View.OnClickListene
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_files);
 
-    boolean showPro = Compatibility.isPlayStoreSupported(this) && !isProVersion(this);
     findViewById(R.id.settings).setOnClickListener(this);
 
     mName = findViewById(R.id.name);
@@ -405,11 +404,9 @@ public class FileManager extends AbstractActivity implements View.OnClickListene
       values.add(getString(R.string.mode_face));
       icons.add(getDrawable(R.drawable.ic_type_scan));
       values.add(getString(R.string.mode_realtime));
-      if (isProVersion(this)) {
         icons.add(getDrawable(R.drawable.ic_type_dataset));
         values.add(getString(R.string.mode_dataset));
       }
-    }
 
     SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(FileManager.this);
     ArrayAdapterWithIcons adapter = new ArrayAdapterWithIcons(this, values, icons);

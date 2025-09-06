@@ -50,10 +50,6 @@ public abstract class AbstractActivity extends Activity {
     return dp * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
   }
 
-  public float convertPxToDp(float px) {
-    return px / ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-  }
-
   public static void deleteOnBackground(File file) {
     synchronized (toDelete) {
 
@@ -104,23 +100,9 @@ public abstract class AbstractActivity extends Activity {
     return 0;
   }
 
-  public int getStatusBarHeight() {
-    int result = 0;
-    int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-    if (resourceId > 0) {
-      result = getResources().getDimensionPixelSize(resourceId);
-    }
-    return result;
-  }
-
   public abstract int getNavigationBarColor();
 
   public abstract int getStatusBarColor();
-
-//  public static int getBackend(Activity context)
-//  {
-//    return Compatibility.shouldUseHuawei(context) ? 1 : 0;
-//  }
 
   public static float getResolution(Context context)
   {
@@ -139,10 +121,6 @@ public abstract class AbstractActivity extends Activity {
   {
     SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
     return pref.getString(context.getString(com.lvonasek.arcore3dscanner.R.string.pref_mode), "realtime").compareTo("face") == 0;
-  }
-
-  public static boolean isProVersion(Context context) {
-    return true;
   }
 
   public static boolean isPostProcessLaterOn(Context context) {
